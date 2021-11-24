@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Alert } from 'react-native'
+import { Input } from '../../components/Input'
 import { useAuth } from '../../hooks/auth'
+import { useTheme } from 'styled-components'
 
 import { Container, LoginWrapper, User, Password, EnterButton } from './styles'
 
@@ -9,14 +10,24 @@ export function Login() {
   const [password, setPassword] = useState('')
   const { signIn } = useAuth()
 
-  async function login() {
+  const theme = useTheme()
+
+  function login() {
     signIn({ login: user, senha: password })
   }
   return (
     <Container>
       <LoginWrapper>
-        <User onChangeText={setUser} value={user} placeholder="Usuário" />
-        <Password
+        <Input
+          color={theme.colors.shape.toString()}
+          iconName="user"
+          onChangeText={setUser}
+          value={user}
+          placeholder="Usuário"
+        />
+        <Input
+          color={theme.colors.shape.toString()}
+          iconName="key"
           onChangeText={setPassword}
           value={password}
           placeholder="Senha"
