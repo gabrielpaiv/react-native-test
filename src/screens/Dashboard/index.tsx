@@ -11,12 +11,19 @@ import {
 import { useTheme } from 'styled-components'
 import { useAuth } from '../../hooks/auth'
 import { Input } from '../../components/Input'
+import { FlatList } from 'react-native'
+import { School } from '../../components/School'
+import { useNavigation } from '@react-navigation/native'
 
 export function Dashboard() {
   const theme = useTheme()
-  const { signOut } = useAuth()
+  const { data, signOut } = useAuth()
+  const { navigate } = useNavigation()
   function logout() {
     signOut()
+  }
+  function handleSchoolPress(school: School) {
+    navigate('News', { school })
   }
   return (
     <Container>
@@ -33,6 +40,18 @@ export function Dashboard() {
           placeholder="Busca"
         />
       </SearchWrapper>
+      <FlatList
+        data={data.conteudo}
+        keyExtractor={item => String(item.id)}
+        renderItem={({ item }) => (
+          <School
+            logoUrl={item.urlLogoContexto}
+            title={item.nomeAplicacao}
+            schoolUrl={item.contexto}
+            onPress={() => handleSchoolPress(item)}
+          />
+        )}
+      />
     </Container>
   )
 }
