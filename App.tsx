@@ -1,6 +1,12 @@
 import React from 'react'
-import { View } from 'react-native'
+import { ThemeProvider } from 'styled-components'
+import theme from './src/global/styles/theme'
+import { Login } from './src/screens/Login'
 
 export default function App() {
-  return <View></View>
+  return (
+    <ThemeProvider theme={theme}>
+      <Login />
+    </ThemeProvider>
+  )
 }
